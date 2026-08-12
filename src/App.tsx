@@ -10,7 +10,7 @@ function App() {
   const [board, setBoard] = useState(Array(9).fill(null));
   const [turn, setTurn] = useState(TURNS.PLAYER_X);
   const [winner, setWinner] = useState(null);
-  
+
   const checkWinner = (newBoard: string[]) => {
     const WINNER_COMBOS = [
       [0, 1, 2],
@@ -32,18 +32,28 @@ function App() {
     }
     return null;
   }
-  
+
   const updateBoard = (index: number) => {
-    
+
     if (board[index] || winner) return;
     const newBoard = [...board];
-    
+
     newBoard[index] = turn;
     setBoard(newBoard);
-    
-    if(checkWinner(newBoard)) return;
+
+    if (checkWinner(newBoard)) {
+      return;
+    } else if (!newBoard.includes(null)) {
+      setWinner(false);
+    }
 
     setTurn(turn === TURNS.PLAYER_X ? TURNS.PLAYER_O : TURNS.PLAYER_X);
+  }
+
+  const resetGame = () => {
+    setBoard(Array(9).fill(null));
+    setTurn(turn === TURNS.PLAYER_X ? TURNS.PLAYER_O : TURNS.PLAYER_X);
+    setWinner(null);
   }
 
   return (
@@ -66,7 +76,16 @@ function App() {
           }
         </section>
         <h2 className="text-2xl mt-4">Turn: {turn}</h2>
-        {winner && <h2>Winner: {winner}</h2>}
+        {winner !== null &&
+          (
+            <h2>{winner === false ? "Draw" : `Winner: ${winner}`}</h2>
+          )
+        }
+
+        <button onClick={() => resetGame()} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded">
+          Reset
+        </button>
+
       </main>
     </>
   )
