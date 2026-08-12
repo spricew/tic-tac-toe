@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import './App.css'
 import { SquareCell } from './components/SquareCell';
 
 function App() {
