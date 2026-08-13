@@ -1,3 +1,5 @@
+import { PlayerIcon } from './PlayerIcons';
+
 interface SquareCellProps {
     index: number;
     value: string | null;
@@ -20,9 +22,9 @@ export function SquareCell({
             className={`grid place-items-center aspect-square w-24 
             border border-black text-2xl transition-colors
             ${value === 'x' ? "bg-red-600 text-white" :
-              value === 'o' ? "bg-blue-600 text-white" : "bg-white"}
+                    value === 'o' ? "bg-blue-600 text-white" : "bg-white"}
             `}>
-            {value}
+            {<PlayerIcon player={value} />}
         </button>
     );
 }
